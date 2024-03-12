@@ -1,7 +1,7 @@
 # Trove Planer
 Calendar for Trove employees to schedule their work day
 
-![Screenshot of Trove employ day scheduler](/assets/images/screenshot-planer.png?raw=true "TrovePlanner")
+![Screenshot of Trove employee day scheduler](/assets/images/screenshot-troveplaner.png?raw=true "TrovePlaner")
 
 # Purpose
 A way to optimize and help employes move through their day. This is a template for a future project.
