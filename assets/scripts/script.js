@@ -1,31 +1,13 @@
 // Global varibles
 var data;
 var localName = "TrovePlanner";
-var min = 11;
-var max = 22;
+var min = 8;
+var max = 17;
 
 $(function () {
-  updateClock();
   getData();
+  updateClock();
   updatePlanner();
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
 });
 
 setInterval(() => {
@@ -71,10 +53,11 @@ function updatePlanner(){
       textArea.attr("rows", "3" );
       textArea.attr("aria-label", "save" );
       
-      var matchingItem = data.filter(function(item) {
-        return item.hour === i;
-      });
-      textArea.val(matchingItem.text);
+      for (var j = 0; j < data.length; j++){
+        if (i == data[j].hour){
+          textArea.val(data[j].note);
+        }
+      }
       
       hour.append(textArea);
 
@@ -104,11 +87,24 @@ function updatePlanner(){
 
 // Function to save button click by index
 function saveData(buttonId){
-  var matchingItem = data.filter(function(item) {
-    return item.hour === i;
-  });
-  textArea.val(matchingItem.text);
-  alert(buttonId);
+    var id = buttonId.replace(/button/g, "");
+    var textArea =  document.getElementById("text" + id);
+
+    // Find index in array and save
+    for (var i = 0; i < data.length; i++){
+      if (id == data[i].hour){
+        console.log(data[i]);
+        data[i].note = textArea.value;
+      }
+    }
+
+    localStorage.setItem(localName,JSON.stringify(data));
+    
+  console.log(data);
+  
+  //console.log(id, matchingItem.text);
+  
+  
 }
 
 function getData(){
@@ -123,13 +119,16 @@ function getData(){
      // Generate hour slots
      var slot = {
       hour: 0,
-      text: ""
+      note: ""
      }
 
      data = [];
      for (let i = min; i <= max; i++) { 
-      slot.hour = i;
-      slot.text = ""
+      var slot = {
+        hour: i,
+        note: ""
+        }
+        
       data.push(slot);
     }
   }
