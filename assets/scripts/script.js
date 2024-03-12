@@ -30,3 +30,49 @@ updateClock()
 function updateClock() {
   $('#currentDay').text(dayjs().format('dddd, MMMM D YYYY, h:mm:ss a'));
 }
+
+updatePlanner();
+function updatePlanner(){
+  var min = 8;
+  var max = 18;
+
+  
+    // Generate hour slots
+    for (let i = min; i <= max; i++) { 
+      var hour = $('<div>');
+      // Set the class of the div
+      hour.addClass("hour row time-block present");
+      hour.attr("id", "hour-" + i);
+      
+      var col = $('<div>');
+      col.addClass("col-2 col-md-1 hour text-center py-3");
+      col.text(i+ "AM");
+      hour.append(col);
+
+      var textArea = $('<textarea>');
+      textArea.addClass("col-8 col-md-10 description");
+      textArea.attr("rows", "3" );
+      textArea.attr("aria-label", "save" );
+      hour.append(textArea);
+
+      var button = $('<button>');
+      button.addClass("btn saveBtn col-2 col-md-1");
+      button.attr("aria-label", "save" );
+      hour.append(button);
+
+      var iClass = $('<i>');
+      iClass.addClass("fas fa-save");
+      iClass.attr("aria-hidden", "true" );
+      hour.append(button);
+//<i class="fas fa-save" aria-hidden="true"></i>
+      hour.append(button);
+
+      
+      console.log(hour);
+      
+      
+      $('#calendar').append(hour);
+
+    }
+}
+
